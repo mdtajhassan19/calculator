@@ -1,0 +1,182 @@
+{
+  "info": {
+    "_postman_id": "37a7d4c2-9486-4dfe-ab1d-2f2fd1434ecd",
+    "name": "FastApiCalculator",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "32728700",
+    "_collection_link": "https://go.postman.co/collection/32728700-37a7d4c2-9486-4dfe-ab1d-2f2fd1434ecd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Valid test case",
+      "item": [
+        {
+          "name": "Calculator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Valid addition expecting 200\", () => {\r",
+                  "    console.log(pm.response.code)\r",
+                  "    pm.expect([200]).to.include(pm.response.code)\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify result \", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.result).to.eql(25.0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"a\": {{a}},\r\n  \"b\": {{b}},\r\n  \"operation\": \"add\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/calculate",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "calculate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Undefined operation",
+      "item": [
+        {
+          "name": "Calculator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Undefined operation expecting 400\", () => {\r",
+                  "    console.log(pm.response.code)\r",
+                  "    pm.expect([400]).to.include(pm.response.code)\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Undefined operation\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.detail).to.eql(\"Invalid operation\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"a\": 10,\r\n  \"b\": 0.1,\r\n  \"operation\": \"abc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/calculate",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "calculate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Divide a number by zero",
+      "item": [
+        {
+          "name": "Calculator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Division by zero expecting 400\", () => {\r",
+                  "    console.log(pm.response.code)\r",
+                  "    pm.expect([400]).to.include(pm.response.code)\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify division by zero operation\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.detail).to.eql(\"Division by zero not allowed\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"a\": 10,\r\n  \"b\": 0,\r\n  \"operation\": \"div\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/calculate",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "calculate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
